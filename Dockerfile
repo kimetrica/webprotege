@@ -21,10 +21,11 @@ WORKDIR /usr/local/tomcat/webapps/ROOT
 
 # Here WEBPROTEGE_VERSION is coming from the custom build args WEBPROTEGE_VERSION=$DOCKER_TAG hooks/build script.
 # Ref: https://docs.docker.com/docker-hub/builds/advanced/
-ARG WEBPROTEGE_VERSION
+#ARG WEBPROTEGE_VERSION
 
-ENV WEBPROTEGE_VERSION $WEBPROTEGE_VERSION
-COPY --from=build /webprotege/webprotege-cli/target/webprotege-cli-${WEBPROTEGE_VERSION}.jar /webprotege-cli.jar
-COPY --from=build /webprotege/webprotege-server/target/webprotege-server-${WEBPROTEGE_VERSION}.war ./webprotege.war
+#ENV WEBPROTEGE_VERSION $WEBPROTEGE_VERSION
+
+COPY --from=build /webprotege/webprotege-cli/target/webprotege-cli-5.0.0-SNAPSHOT.jar /webprotege-cli.jar
+COPY --from=build /webprotege/webprotege-server/target/webprotege-server-5.0.0-SNAPSHOT.war ./webprotege.war
 RUN unzip webprotege.war \
     && rm webprotege.war
