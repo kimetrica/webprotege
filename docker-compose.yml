@@ -1,24 +1,34 @@
-version: "3"
+version: "3.7"
 
 services:
 
-  wpmongo:
+  mongodb:
     container_name: webprotege-mongodb
-    image: mongo:4.1-bionic
+    image: mongo:4.2-bionic
     restart: unless-stopped
     volumes: 
-      - ./.protegedata/mongodb:/data/db
+      - mongodb_data:/data/db
 
   webprotege:
     container_name: webprotege
-    image: protegeproject/webprotege
+    image: kimetrica/webprotege:dev
     depends_on:
-      - wpmongo
+      - mongodb
     restart: unless-stopped
     environment:
-      - webprotege.mongodb.host=wpmongo
+      - webprotege.mongodb.host=mongodb
+      - webprotege.application.host=webprotege.kimetrica.com
+      - mail.smtp.host=smtp.gmail.com
+      - mail.smtp.user=appmail@kimetrica.com
+      - mail.smtp.wp.password=${mail.smtp.wp.password}
+      - mail.smtp.port=465
     volumes: 
-    - ./.protegedata/protege:/srv/webprotege
+      - webprotege_data:/srv/webprotege
+      - webprotege_logs:/var/log/webprotege
     ports:
       - 5000:8080
 
+volumes:
+  webprotege_data:
+  webprotege_logs:
+  mongodb_data:
