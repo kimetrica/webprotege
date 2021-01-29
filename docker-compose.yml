@@ -20,7 +20,6 @@ services:
       - webprotege.application.host=webprotege.kimetrica.com
       - mail.smtp.host=smtp.gmail.com
       - mail.smtp.user=appmail@kimetrica.com
-      - mail.smtp.wp.password=${mail.smtp.wp.password}
       - mail.smtp.port=465
     volumes: 
       - webprotege_data:/srv/webprotege
