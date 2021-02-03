@@ -28,6 +28,8 @@ COPY webprotege-config/* /etc/webprotege
 
 #ENV WEBPROTEGE_VERSION $WEBPROTEGE_VERSION
 
+HEALTHCHECK CMD netstat -an | grep 8080 > /dev/null; if [ 0 != $? ]; then exit 1; fi;
+
 COPY --from=build /webprotege/webprotege-cli/target/webprotege-cli-5.0.0-SNAPSHOT.jar /webprotege-cli.jar
 COPY --from=build /webprotege/webprotege-server/target/webprotege-server-5.0.0-SNAPSHOT.war ./webprotege.war
 RUN unzip webprotege.war \
